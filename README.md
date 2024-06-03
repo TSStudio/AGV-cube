@@ -1,2 +1,50 @@
 # AGV-cube
- Program for AGV to go across cubes on its color
+使得树莓派驱动的小车根据所面对的正方体颜色行走的程序。
+
+## 运行前的准备
+
+您需要在终端执行以下命令以安装需要的包
+```bash
+sudo pip3 install cube-recognizer-for-agv --no-dependencies
+sudo pip3 install numpy
+sudo pip3 install imutils
+sudo pip3 install requests
+```
+此外，您需要 opencv，即能`import cv2`。这理论上也可以通过 pip 安装，但鉴于树莓派的羸弱性能，建议您使用 apt-get 直接安装二进制的编译成品。
+```bash
+sudo apt-get install python-opencv
+```
+
+## 代码逻辑
+
+### 如果检测到符合条件的图形（要求为：通过饱和度阈值产生的封闭图形，面积在一定范围内）则：  
+  记录其重心横坐标 cX。
+  #### 如果在图像边缘（cX距离视野两侧较近）
+  控制电机直行
+  #### 否则
+  根据面积和 cX 以及颜色计算出目标位置
+### 否则
+  #### 如上次记录的 cX 小于一半视野宽度
+  左转
+  #### 否则
+  右转
+
+## 可能需要在调试中修改的量为：
+GPIO 端口  
+PID 系数  
+电机基础速度和转向控制量（为了防止抬头，存在缓起，故需要两套系数）  
+缓起切换到正常速度所需要的循环数  
+目标位置限制  
+边缘判定阈值（即离视野边缘多近时直行）  
+与正方体目标距离系数
+
+例如，若您的车重心已经很靠前即不会抬头，那么可以将循环数设置为0。
+## 调试助手
+在正常运行代码后会生成一个 movie.avi 文件用于诊断故障。  
+
+另外您可以使用 assist.py 辅助调试，其会显示当前的图像识别结果与预计的调节量（实际上就是实时显示的 movie.avi，但不会启动电机）。按 q 退出。
+
+## 操作提示
+运行代码后，在初始化结束后会输出 Ready，此时按回车启动电机进入主循环。  
+在主循环按 Ctrl+C 触发 KeyboardInterrupt 后小车走直线（这样设计是为了能正确释放 GPIO 资源）  
+再次按下 Ctrl+C 结束程序，同时进行视频文件的保存，之后程序会自动退出。
