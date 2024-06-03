@@ -29,7 +29,7 @@ lim_st2 = 16  # 12 14 15 18 25
 # 边沿设定
 side_cutter = 70
 # 与魔方目标距离系数
-distant_factor = 2.5
+distant_factor = 2.6
 # 目标坐标限制
 x_lim_from_side = 80
 
