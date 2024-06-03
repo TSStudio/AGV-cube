@@ -145,17 +145,6 @@ except KeyboardInterrupt:
     print("End")
 
 
-try:
-    while True:
-        ret, frame = cap.read()
-        adjust = 0
-        motor_a, motor_b = get_motor_value(adjust*lim, speed, lim)
-        pwma.ChangeDutyCycle(motor_a)
-        pwmb.ChangeDutyCycle(motor_b)
-        out.write(frame)
-except KeyboardInterrupt:
-    print("End")
-
 
 cap.release()
 out.release()  # 关闭视频文件
