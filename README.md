@@ -5,10 +5,7 @@
 
 您需要在终端执行以下命令以安装需要的包
 ```bash
-sudo pip3 install cube-recognizer-for-agv --no-dependencies
-sudo pip3 install numpy
-sudo pip3 install imutils
-sudo pip3 install requests
+sudo pip3 install cube-recognizer-for-agv
 ```
 此外，您需要 opencv，即能`import cv2`。这理论上也可以通过 pip 安装，但鉴于树莓派的羸弱性能，建议您使用 apt-get 直接安装二进制的编译成品。
 ```bash
