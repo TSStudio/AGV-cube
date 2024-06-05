@@ -6,6 +6,10 @@ Allow AGV powered by RPi to run and turn according to front surface of cubes. In
 如果您修改了代码，按规定也必须开源。但是我没有办法监督和强制您做这件事情，请视其为君子协定。只修改参数则并不需要开源。  
 Any code edition is expected to be open-sourced as well, but I cannot force you to do it. Be wise to do so.
 
+## 一些回应
+此代码总体稳定性的确不能保证，最关键就是第一个魔方能否通过，如果第一个正方体通过，那么程序就会是在某种“稳定状态”下，后续基本可保证通过率。  
+此代码流畅性远不是某些收费代码可以碰瓷的，其自称电机只给了50%，给60%即可超过本代码？实际上本代码电机只给了40%。这一代码出奇制胜的原因就是流程不停顿，我认为优化空间可以达到9s出头。
+
 ## 运行前的准备 Preparation
 
 您需要在终端执行以下命令以安装需要的包  
@@ -37,6 +41,7 @@ sudo apt-get install python-opencv
   右转 Turn Right
 
 ## 可能需要在调试中修改的量为：
+颜色（可能的返回值为 red orange green blue yellow）此代码为绿色从右过，请根据自己的需求修改
 GPIO 端口  
 PID 系数  
 电机基础速度和转向控制量（为了防止抬头，存在缓起，故需要两套系数）  
