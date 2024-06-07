@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import cv2
 import cube_recognizer.libRecognize as lR
+from collections import OrderedDict
 import math
 from pid import PID
 
@@ -27,11 +28,11 @@ speed_st2 = 40  # 35 38 40 45 52
 lim_st2 = 16  # 12 14 15 18 25
 
 # 边沿设定
-side_cutter = 70
+side_cutter = 75
 # 与魔方目标距离系数
-distant_factor = 2.6
+distant_factor = 2.7
 # 目标坐标限制
-x_lim_from_side = 80
+x_lim_from_side = 90
 
 # 设置GPIO编号模式
 GPIO.setmode(GPIO.BCM)
@@ -75,7 +76,13 @@ adjust = 0
 prev_x = cur_x
 tgt_x = 320
 rCN = lR.CubeRecognizer()
-rCN.init()
+dict_ = OrderedDict({
+    "red": 3.99,
+    "orange": 20,
+    "yellow": 55,
+    "green": 105,
+    "blue": 222})
+rCN.init(140, dict_)
 
 try:
     while True:
@@ -90,13 +97,11 @@ try:
 
         ret, frame = cap.read()
 
-        # cur_x = (black_start+black_end) / 2  # 当前黑线位置
-
-        cur_x, color, size, height = rCN.get_rec_cen(frame)   # 当前黑线位置
+        cur_x, color, size, height = rCN.get_rec_cen(frame)
 
         im = frame
         font = cv2.FONT_HERSHEY_SIMPLEX
-        if (cur_x != 0 and size < 80000 and size > 1400):
+        if (cur_x != 0 and size < 80000 and size > 1200):
             cv2.line(im, (cur_x, 0), (cur_x, 480), (0, 255, 0), 3)
             prev_x = cur_x
             cv2.putText(im, "cur_x:"+str(cur_x),
@@ -145,11 +150,10 @@ except KeyboardInterrupt:
     print("End")
 
 
-
 cap.release()
 out.release()  # 关闭视频文件
 cv2.destroyAllWindows()
 pwma.stop()
 pwmb.stop()
 GPIO.cleanup()
-rCN.terminate()
+rCN.terminate()  # IF YOU MIND THE ANONYMOUS DATA COLLECTION, COMMENT THIS LINE
