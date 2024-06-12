@@ -45,7 +45,7 @@ speed_st3 = 100
 # 若该值较大，则在魔方间距较大的情况下，小车可能会识别不到下一个魔方，在经过一个魔方之后持续反向偏转导致失败
 lower_size_threshold = 800
 
-# 小车视野中无色块时的转向程度(0~320)：
+# 小车视野中无有效色块时的转向程度(0 ~ 320)：
 turn_without_target = 210
 
 
@@ -53,7 +53,7 @@ turn_without_target = 210
 side_cutter = 5#75
 # 与魔方目标距离系数：越大则对前方魔方更敏感，但容易提前转弯
 distant_factor = 4.0 #2.7
-# 目标坐标限制
+# 目标坐标限制: 视野中存在有效色块时的转向最大程度限制，越大，转向程度的上限越小
 x_lim_from_side = 90
 ##################################################################################
 
@@ -63,8 +63,8 @@ GPIO.setmode(GPIO.BCM)
 # 设置GPIO口为输出
 
 GPIO.setup([EA, I2, I1, EB, I4, I3], GPIO.OUT)
-GPIO.output([EA, I1, EB, I4], GPIO.LOW)
-GPIO.output([I2, I3], GPIO.HIGH)
+GPIO.output([EA, I2, EB, I3], GPIO.LOW)
+GPIO.output([I1, I4], GPIO.HIGH)
 
 # 设置PWM引脚和频率
 pwma = GPIO.PWM(EA, FREQUENCY)
