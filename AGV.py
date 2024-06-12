@@ -34,7 +34,8 @@ speed_st2 = 100
 lim_st2 = 47# 12 14 15 18 25
 
 Final_Sprint = True # 是否启用阶段3直行冲刺：若末尾魔方与终点线距离较小则可关闭
-sleep_time = 1 # 设置阶段3转向持续时间（秒）
+# 注：进入阶段3后小车将不会接收到任何图像信号，可通过保存的movie.avi的结束时刻判断小车何时进入阶段3
+sleep_time = 1 # 设置阶段3进入冲刺前的转向持续时间（秒）
 # 阶段3直行冲刺速度
 speed_st3 = 100
 
@@ -176,7 +177,7 @@ try:
             else:
                 tgt_x = 320 + turn_without_target  # 580
             adjust = pid_line.update(tgt_x)
-            if cnt == 3 and size < 10:
+            if cnt >= 3 and size < 10:
                 flag = 1
         cv2.line(im, (int(tgt_x), 0), (int(tgt_x), 480), (255, 0, 0), 3)
         cv2.putText(im, "tgt_x:"+str(tgt_x), (10, 60), font, 1, (255, 0, 0), 2)
