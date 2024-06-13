@@ -134,7 +134,7 @@ try:
         
         im = frame
         font = cv2.FONT_HERSHEY_SIMPLEX
-        if (cur_x != 0 and size < 80000 and size > lower_size_threshold):
+        if (cur_x != 0 and size > lower_size_threshold):
             
             now_color = color
             if now_color != last_color:
