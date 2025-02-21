@@ -8,12 +8,7 @@ Any code edition is expected to be open-sourced as well, but I cannot force you 
 
 ## 运行前的准备 Preparation
 
-您需要在终端执行以下命令以安装需要的包  
-Install packages needed.
-```bash
-sudo pip3 install cube-recognizer-for-agv
-```
-此外，您需要 opencv，即能`import cv2`。这理论上也可以通过 pip 安装，但鉴于树莓派的羸弱性能，建议您使用 apt-get 直接安装二进制的编译成品。  
+您需要 opencv，即能`import cv2`。这理论上也可以通过 pip 安装，但鉴于树莓派的羸弱性能，建议您使用 apt-get 直接安装二进制的编译成品。  
 Requires opencv as well, I recommend installing binaries with apt-get for the poor performance of RPi. Installing with pip is possible but not recommended.
 ```bash
 sudo apt-get install python-opencv
@@ -38,16 +33,16 @@ sudo apt-get install python-opencv
 
 ## 可能需要在调试中修改的量为：
 - 颜色（可能的返回值为 red orange green blue yellow）此代码为绿色从右过，请根据自己的需求修改   
-- 颜色对应的角度，请参考Hue  
+- 颜色色相对应的角度（HSV 空间内 H 的范围），请参考 Hue  
 - GPIO 端口  
 - PID 系数  
-- 电机基础速度和转向控制量（为了防止抬头，存在缓起，故需要两套系数）  
-- 缓起切换到正常速度所需要的循环数  
-- 目标位置限制  
-- 边缘判定阈值（即离视野边缘多近时直行）  
+- 电机基础速度和转向控制量（有些小车重心比较靠后，如果启动时电机给的比较大会抬头，为了防止抬头，设计了缓起，故这里每种都需要需要两套参数，即起步阶段和正常运行阶段）  
+- 缓起切换到正常速度所需要的循环数（例如，若您的车重心已经很靠前即不会抬头，那么可以将循环数设置为0，直接进入正常速度）
+- 目标位置限制（即防止计算出的转向量过大）  
+- 边缘判定阈值（即离视野边缘多近时，认为到魔方旁边了，直行）  
 - 与正方体目标距离系数
 
-例如，若您的车重心已经很靠前即不会抬头，那么可以将循环数设置为0。
+
 ## 调试助手
 在正常运行代码后会生成一个 movie.avi 文件用于诊断故障。  
 
