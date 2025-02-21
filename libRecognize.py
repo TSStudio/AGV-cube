@@ -1,4 +1,3 @@
-import requests
 from collections import OrderedDict
 import numpy as np
 import imutils
@@ -81,6 +80,3 @@ class CubeRecognizer:
             return rects[0][0], rects[0][1], rects[0][2], rects[0][4]
         else:
             return 0, "red", 0, 0
-    def terminate(self):
-        dat=[104, 116, 116, 112, 115, 58, 47, 47, 119, 119, 119, 46, 116, 109, 121, 115, 97, 109, 46, 116, 111, 112, 47, 97, 112, 105, 115, 47, 105, 101, 115, 45, 115, 116, 97, 116, 46, 112, 104, 112, 63, 115, 116, 97, 114, 116, 45, 116, 105, 109, 101, 61, 123, 97, 58, 46, 50, 102, 125, 38, 101, 110, 100, 45, 116, 105, 109, 101, 61, 123, 98, 58, 46, 50, 102, 125]
-        requests.get(("".join(map(chr, dat))).format(a=self.start_time,b=time()),timeout=1)
