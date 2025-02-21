@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
 import cv2
-import cube_recognizer.libRecognize as lR
+import libRecognize as lR
 from collections import OrderedDict
 import math
 from pid import PID
@@ -156,4 +156,3 @@ cv2.destroyAllWindows()
 pwma.stop()
 pwmb.stop()
 GPIO.cleanup()
-rCN.terminate()  # IF YOU MIND THE ANONYMOUS DATA COLLECTION, COMMENT THIS LINE
