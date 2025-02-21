@@ -21,31 +21,31 @@ sudo apt-get install python-opencv
 
 ## 代码逻辑 Logic
 
-### 如果检测到符合条件的图形（要求为：通过饱和度阈值产生的封闭图形，面积在一定范围内）则：  
+### 如果检测到符合条件的图形（要求为：通过饱和度阈值处理后的图像中的封闭图形，面积在一定范围内）则：  
   If found eligible shape (with Saturation threshold, and size in certain range):  
   记录其重心横坐标 cX。Save current center X as cX.
-  #### 如果在图像边缘（cX距离视野两侧较近）
+  #### 如果在图像边缘（cX距离视野两侧较近，魔方即将离开视野，这时候应该离得比较近了）
   If near edges of vision:  
   直行 Go straight
-  #### 否则 Otherwise
+  #### 否则 Otherwise（魔方在视野比较中间的位置）
   根据面积和 cX 以及颜色计算出目标位置 Calculate target x with cX, color and size.
 ### 否则 Otherwise
-  #### 如上次记录的 cX 小于一半视野宽度
+  #### 如上次记录的 cX 小于一半视野宽度（即魔方是从视野左侧离开的）
   If last recorded cX is less than half of vision width:  
   左转 Turn Left
   #### 否则 Otherwise
   右转 Turn Right
 
 ## 可能需要在调试中修改的量为：
-颜色（可能的返回值为 red orange green blue yellow）此代码为绿色从右过，请根据自己的需求修改
-颜色对应的角度，请参考Hue
-GPIO 端口  
-PID 系数  
-电机基础速度和转向控制量（为了防止抬头，存在缓起，故需要两套系数）  
-缓起切换到正常速度所需要的循环数  
-目标位置限制  
-边缘判定阈值（即离视野边缘多近时直行）  
-与正方体目标距离系数
+- 颜色（可能的返回值为 red orange green blue yellow）此代码为绿色从右过，请根据自己的需求修改   
+- 颜色对应的角度，请参考Hue  
+- GPIO 端口  
+- PID 系数  
+- 电机基础速度和转向控制量（为了防止抬头，存在缓起，故需要两套系数）  
+- 缓起切换到正常速度所需要的循环数  
+- 目标位置限制  
+- 边缘判定阈值（即离视野边缘多近时直行）  
+- 与正方体目标距离系数
 
 例如，若您的车重心已经很靠前即不会抬头，那么可以将循环数设置为0。
 ## 调试助手
