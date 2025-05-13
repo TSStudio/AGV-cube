@@ -3,7 +3,6 @@ import numpy as np
 import imutils
 import cv2
 from time import time
-from urllib.parse import quote, unquote
 
 class ColorLabeler:
     def __init__(self,dict_=None):
