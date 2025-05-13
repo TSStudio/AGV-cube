@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import cv2
-import cube_recognizer.libRecognize as lR
+import libRecognize as lR
 import math
 
 # 打开摄像头
